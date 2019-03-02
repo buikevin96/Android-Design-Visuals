@@ -1,12 +1,16 @@
 package com.example.kevinbui.showactivity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class SecondActivity extends AppCompatActivity {
 
     private TextView showMessage;
+    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +21,7 @@ public class SecondActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         showMessage = (TextView)findViewById(R.id.messageTextView);
+        backButton = (Button)findViewById(R.id.backButton);
 
         // Check
         if (extras != null) {
@@ -27,6 +32,17 @@ public class SecondActivity extends AppCompatActivity {
             showMessage.setText("Message is " + message + " and : "  + String.valueOf(myInt));
 
         }
+
+        // When button is clicked, send message to first activity
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent returnIntent = getIntent();
+                returnIntent.putExtra("returnData", "From SecondActivity");
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            }
+        });
 
     }
 }
