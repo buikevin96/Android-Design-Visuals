@@ -25,7 +25,7 @@ public class SecondActivity extends AppCompatActivity {
 
         // Check
         if (extras != null) {
-            String message = extras.getString("Message"); // To get string message
+            String message = extras.getString("SecondMessage"); // To get string message
             int myInt = extras.getInt("Value"); // To get int message
 
            // showMessage.setText(message); Shows message of string

@@ -18,7 +18,6 @@ public class FirstActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
 
-
         goToSecondButton = (Button)findViewById(R.id.showButtonID);
         goToSecondButton.setOnClickListener(new View.OnClickListener() {
             @Override
