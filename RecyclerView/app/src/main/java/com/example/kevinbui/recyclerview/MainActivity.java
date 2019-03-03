@@ -27,14 +27,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         listItems = new ArrayList <>();
-        for (int i = 0; i < 10; i++){
-            ListItem item = new ListItem(
-                    "Item " + (i+1),
-                    "Description"
-            );
 
-            listItems.add(item); // Add item into listitems each time it goes through
-        }
+        ListItem item1 = new ListItem("Movie 1", "It's about someone crazy...", "Wow! Great!");
+        ListItem item2 = new ListItem("Movie 2", "It's about someone you...", "Wow!");
+
+
+//        for (int i = 0; i < 10; i++){
+//            ListItem item = new ListItem(
+//                    "Item " + (i+1),
+//                    "Description",
+//                    "Excellent"
+//            );
+
+            listItems.add(item1); // Add item into listitems each time it goes through
+            listItems.add(item2);
+        //}
 
         // Sets the adapter and passes it in
         adapter = new MyAdapter(this, listItems);
