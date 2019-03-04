@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                batAnimation.stop();
+                Animation startanimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein_animation);
+                batImage.startAnimation(startanimation);
+
+                //batAnimation.stop();
             }
         }, 5000); // 5 seconds
 
