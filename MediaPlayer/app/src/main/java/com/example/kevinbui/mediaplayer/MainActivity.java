@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,6 +19,17 @@ public class MainActivity extends AppCompatActivity {
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.game_field);
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+
+                int duration = mp.getDuration(); // Returns duration of mp3 being played
+                String mDuration = String.valueOf(duration/1000); // In seconds
+
+                Toast.makeText(getApplicationContext(),"duration " + mDuration, Toast.LENGTH_LONG).show();
+            }
+        });
 
         playButton = (Button)findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +58,17 @@ public class MainActivity extends AppCompatActivity {
             playButton.setText("Pause"); // The button will change its text to pauise
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()){
+            mediaPlayer.stop(); // Stop the player
+            mediaPlayer.release(); // Release resources back to android
+            mediaPlayer=null; // Kills the media player object
+
+        }
+        super.onDestroy();
     }
 }
 
