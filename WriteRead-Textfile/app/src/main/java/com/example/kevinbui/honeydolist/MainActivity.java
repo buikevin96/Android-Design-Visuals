@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    
+
 
     private void writeToFile(String message){
         try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput("todolist.txt"), Context.MODE_PRIVATE));
