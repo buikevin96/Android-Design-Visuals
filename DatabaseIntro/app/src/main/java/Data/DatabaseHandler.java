@@ -8,13 +8,16 @@ import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Model.Contact;
 import Utils.Util;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Constructer method to construct helper
-    public DatabaseHandler(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public DatabaseHandler(@Nullable Context context) {
         super(context, Util.DATABASE_NAME, null, Util.DATEBASE_VERSION);
     }
 
@@ -32,7 +35,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       // Dropping = delete table
+        // Dropping = delete table
         db.execSQL("DROP TABLE IF EXISTS " + Util.TABLE_NAME);
 
         // Create table again
@@ -44,7 +47,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
      */
 
-    public void addContact(Contact contact){
+    public void addContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues value = new ContentValues();
@@ -65,13 +68,43 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         Util.KEY_NAME, Util.KEY_PHONE_NUMBER}, Util.KEY_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
-        if (cursor != null) {
+        if (cursor != null)
             cursor.moveToFirst();
 
-            Contact contact = new Contact(Integer.parseInt(cursor.getString(0)),
-                    cursor.getString(1), cursor.getString(2));
+        Contact contact = new Contact(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2));
 
-            return contact;
+        return contact;
+    }
+
+    // Get all contacts
+    public List<Contact> getAllContacts() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        List<Contact> contactList = new ArrayList<>();
+
+        // Select all contacts
+
+        String selectAll = "SELECT * FROM" + Util.TABLE_NAME;
+        Cursor cursor = db.rawQuery(selectAll, null);
+
+        // Loop through our contacts
+
+        if (cursor.moveToFirst()){
+            do {
+                Contact contact = new Contact();
+                contact.setId(Integer.parseInt(cursor.getString(0)));
+                contact.setName(cursor.getString(1));
+                contact.setPhoneNumber(cursor.getString(2));
+
+                // Add contact object to our contact list
+                contactList.add(contact);
+
+            } while (cursor.moveToNext());
         }
+
+        return contactList;
+
     }
 }
