@@ -29,6 +29,17 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Reading: ", "Reading all contacts...");
         List<Contact> contactList = db.getAllContacts();
 
+        // Get 1 contact
+        Contact oneContact = db.getContact(1);
+        oneContact.setName("Pauloooo");
+        oneContact.setPhoneNumber("0000000000");
+
+        // Update contact
+        int newContact = db.updateContact(oneContact);
+
+        Log.d("One contact:", "Updated Row: " + String.valueOf(newContact) + "Name: " +oneContact.getName() + "Phone: " + oneContact.getPhoneNumber());
+        db.deleteContact(oneContact);
+
         for (Contact c: contactList){
             String log = "ID: " + c.getId()+ " , Name: "+ c.getName() + ", Phone: " +c.getPhoneNumber();
 
